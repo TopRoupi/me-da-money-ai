@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="./photon/css/photon.min.css">
+
+    <script>
+        window.$ = window.Jquery = require('jquery');
+    </script>
+
+    <script src="./photon/js/controler.js"></script>
+</head>
+
+<body>
+    <div class="window">
+        <header class="toolbar toolbar-header">
+
+            <div class="toolbar-actions">
+                <div class="btn-group">
+                    <a style="text-decoration: none" href="./index.html" class="btn btn-default">
+                        <span class="icon icon-home icon-text"></span>Home
+                    </a>
+                    <a style="text-decoration: none" href="./cards.html" class="btn btn-default">
+                        <span class="icon icon-window icon-text"></span>Cards
+                    </a>
+                </div>
+                <a href="https://twitter.com/Top_Roupi" class="btn btn-default">
+                    <span class="icon icon-twitter"></span>
+                </a>
+                <div class="btn-group pull-right">
+                    <button id="btnMin" class="btn btn-default">
+                        <span class="icon icon-minus"></span>
+                    </button>
+                    <button id="btnMax" class="btn btn-default">
+                        <span class="icon icon-plus"></span>
+                    </button>
+                    <button id="btnKill" class="btn btn-default btn-negative active">
+                        <span class="icon icon-cancel-circled"></span>
+                    </button>
+                </div>
+            </div>
+
+        </header>
+
+        <div class="window-content">
+
+            <table class="table-striped">
+                <thead>
+                    <tr>
+                        <th>Card number</th>
+                        <th>Expiry date</th>
+                        <th>Security code</th>
+                    </tr>
+                </thead>
+                <tbody id="card-itens">
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</body>
+
+<script>
+    cardI = document.getElementById("card-itens");
+
+    $.ajax({
+        url: "http://localhost:5000/api/creditcard/todos",
+        cache: false,
+        success: function (data) {
+            console.log(data);
+            html = "";
+            for(let i = 0; i < data.length; i++){
+                item = data[i];
+                html += "<tr>";
+                html += "<td>" + item.card_number + "</td>"
+                html += "<td>" + item.expiry_date + "</td>"
+                html += "<td>" + item.cvv + "</td>"
+                html += "</tr>"
+            }
+            cardI.innerHTML = html;
+        }
+    });
+</script>
+
+</html>
